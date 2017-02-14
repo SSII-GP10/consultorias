@@ -69,7 +69,7 @@ public class Interface {
     }
     
     public static void pressKey(){
-        System.out.println("\nPress any key to continue ...");
+        System.out.println("\nPress enter to continue ...");
         try {
             System.in.read();
         } catch (IOException ex) {

@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 public class Utility {
     private static String[] hexDigits ={"0", "1", "2", "3","4", "5", "6", "7","8", "9", "a", "b","c", "d", "e", "f"};
     
+    //Calcula el password del hash recibido utilizando fuerza bruta
     public static String bruteForcePassword(String hash, String algorithm) throws UnsupportedEncodingException, NoSuchAlgorithmException{
         BruteForce bruteForce = new BruteForce();
         String attemptPassword = bruteForce.toString();
