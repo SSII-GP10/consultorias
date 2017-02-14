@@ -28,6 +28,8 @@ public class Main {
                 break;
             case 3:
                 Interface.cleanScreen();
+                password = Interface.bruteForce(hash);
+                Interface.showPassword(password);
                 Interface.pressKey();
                 break;
             }

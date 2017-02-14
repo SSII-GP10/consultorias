@@ -13,6 +13,19 @@ import java.util.regex.Pattern;
 public class Utility {
     private static String[] hexDigits ={"0", "1", "2", "3","4", "5", "6", "7","8", "9", "a", "b","c", "d", "e", "f"};
     
+    public static String bruteForcePassword(String hash, String algorithm) throws UnsupportedEncodingException, NoSuchAlgorithmException{
+        BruteForce bruteForce = new BruteForce();
+        String attemptPassword = bruteForce.toString();
+        while (true) {
+            String passwordHash = hashWord(attemptPassword, algorithm);
+            if (passwordHash.equals(hash)) {
+                return attemptPassword;
+            }
+            attemptPassword = bruteForce.toString();
+            bruteForce.increment();
+        }
+    }
+    
     //Calcula el password del hash recibido utilizando el diccionario de ataque recibido por parametro
     public static String lookupPassword(String hash, String algorithm, String dicFile) throws FileNotFoundException, IOException, UnsupportedEncodingException, NoSuchAlgorithmException {
         BufferedReader in = new BufferedReader(new FileReader(dicFile));
@@ -33,6 +46,14 @@ public class Utility {
         byte[] hash = md.digest(word.getBytes("UTF-8"));
         return Utility.byteArrayToHexString(hash);
     }
+    
+    //Checkea si un password pasa la politica de seguridad de la empresa
+    public static boolean policyPassword(String password) {
+        Matcher matchOne = Pattern.compile("[A-Za-z]").matcher(password);
+        Matcher matchTwo = Pattern.compile("[0-9]").matcher(password);
+        Matcher matchThree = Pattern.compile("[~\\!@#\\$%\\^&\\*\\(\\)_\\+{}\\\":;'\\[\\]]").matcher(password);
+        return matchOne.find() && matchTwo.find() && matchThree.find() && password.length() >= 8;
+    }
         
     //Convierte un byte a una cadena hexadecimal
     public static String byteToHexString(byte b) {
@@ -50,13 +71,5 @@ public class Utility {
             result+= byteToHexString(b[i]);
         }
         return result;
-    }
-
-    //Checkea si un password pasa la politica de seguridad de la empresa
-    public static boolean policyPassword(String password) {
-        Matcher matchOne = Pattern.compile("[A-Za-z]").matcher(password);
-        Matcher matchTwo = Pattern.compile("[0-9]").matcher(password);
-        Matcher matchThree = Pattern.compile("[~\\!@#\\$%\\^&\\*\\(\\)_\\+{}\\\":;'\\[\\]]").matcher(password);
-        return matchOne.find() && matchTwo.find() && matchThree.find() && password.length() >= 8;
     }
 }

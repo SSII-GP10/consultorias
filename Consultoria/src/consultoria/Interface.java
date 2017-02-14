@@ -42,6 +42,18 @@ public class Interface {
         return password;
     }
     
+    public static String bruteForce(String hash){
+        String password = null;
+        try {
+            password = Utility.bruteForcePassword(hash, "SHA-1");
+        } catch (UnsupportedEncodingException ex) {
+            System.out.println("Cannont find the encoding type.");
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("Cannont find the hashing algorithm.");
+        }
+        return password;
+    }
+    
     public static void showPassword(String password){
         if(password == null){
             System.out.println("Cannot find a password that matches the given hash");
