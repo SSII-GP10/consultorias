@@ -89,7 +89,6 @@ public class MacDecoder extends Thread {
 			KeyGenerator kg = KeyGenerator.getInstance("HmacSHA1");
 			kg.init(32);
 			SecretKey clave = kg.generateKey();
-			
 			mac1.init(clave);
 			mac1.update(message.getBytes());
 			byte[] res = mac1.doFinal();
